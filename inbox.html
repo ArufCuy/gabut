@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inbox - Pesan Masuk</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --htmlFontSize: 100%;
+        --bodyBackgroundColor: #2c3338;
+        --bodyColor: var(--baseColor);
+        --bodyFontFamily: "Open Sans";
+        --bodyFontFamilyFallback: sans-serif;
+        --bodyFontSize: 0.875rem;
+        --bodyFontWeight: 400;
+        --bodyLineHeight: 1.5;
+        --buttonColor: #fff;
+        --buttonBackgroundColor: #ea4c88;
+        --buttonHoverColor: #fff;
+        --buttonHoverBackgroundColor: #d44179;
+        --readMessageColor: #434a52;
+      }
+
+      * {
+        box-sizing: inherit;
+      }
+
+      html {
+        box-sizing: border-box;
+        font-size: var(--htmlFontSize);
+      }
+
+      body {
+        background-color: var(--bodyBackgroundColor);
+        color: var(--bodyColor);
+        font-family: var(--bodyFontFamily), var(--bodyFontFamilyFallback);
+        font-size: var(--bodyFontSize);
+        font-weight: var(--bodyFontWeight);
+        line-height: var(--bodyLineHeight);
+        margin: 0;
+        min-block-size: 100vh;
+      }
+
+      #header {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 1rem;
+        background-color: var(--bodyBackgroundColor);
+        color: var(--bodyColor);
+      }
+
+      #header button {
+        padding: 0.5rem 1rem;
+        background-color: var(--buttonBackgroundColor);
+        color: var(--buttonColor);
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
+
+      #header button:hover {
+        background-color: var(--buttonHoverBackgroundColor);
+        color: var(--buttonHoverColor);
+      }
+
+      #messagesContainer {
+        padding: 2rem;
+        color: var(--bodyColor);
+      }
+
+      h1 {
+        color: #ffffff;
+        text-align: center;
+      }
+
+      h2 {
+        color: var(--bodyColor);
+        text-align: center;
+      }
+
+      #messagesList {
+        list-style: none;
+        padding: 0;
+      }
+
+      .messageItem {
+        display: flex;
+        align-items: center;
+        background-color: var(--readMessageColor);
+        margin-bottom: 1rem;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        flex-wrap: wrap;
+      }
+
+      .messageItem:hover {
+        background-color: #434a52;
+      }
+
+      .messageItem.unread {
+        background-color: var(--unreadMessageColor);
+      }
+
+      .messageItem img {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        margin-right: 1rem;
+      }
+
+      .messageHeader {
+        font-weight: bold;
+        color: #ffffff;
+      }
+
+      .messageSubject {
+        color: #bbb;
+      }
+
+      .messageActions {
+        margin-top: 1rem;
+      }
+
+      .messageActions button {
+        padding: 0.5rem 1rem;
+        background-color: #ea4c88;
+        color: #fff;
+        border: none;
+        border-radius: 0.25rem;
+        margin-right: 0.5rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .messageActions button:hover {
+        background-color: #d44179;
+      }
+
+      @media (max-width: 768px) {
+        .messageItem {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .messageItem img {
+          margin-bottom: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="header">
+        <button onclick="refreshPage()" style="margin-right: 10px;">Refresh</button>
+        <button onclick="signOut()">Sign Out</button>
+      </div>
+      
+    <h1>Inbox - Pesan Masuk</h1>
+
+    <div id="messagesContainer">
+      <h2 style="color: #ffffff">Pesan Masuk</h2>
+      <ul id="messagesList"></ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.js"></script>
+
+    <script>
+      const token = localStorage.getItem("token");
+    
+      if (!token) {
+        alert("Anda perlu login terlebih dahulu!");
+        window.location.href = "https://mail.Arufkuy.my.id";
+      }
+    
+      // Fungsi untuk mengambil pesan
+      async function getMessages() {
+        let messages = [];
+        let response;
+    
+        // Coba API pertama (api.mail.tm)
+        try {
+          response = await fetch("https://api.mail.tm/messages", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+    
+          if (response.ok) {
+            messages = await response.json();
+          } else {
+            throw new Error("Gagal mengambil pesan dari API pertama.");
+          }
+        } catch (error) {
+          console.log("API pertama gagal, mencoba API kedua...");
+          // Jika API pertama gagal, coba API kedua (api.mail.gw)
+          try {
+            response = await fetch("https://api.mail.gw/messages", {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+    
+            if (response.ok) {
+              messages = await response.json();
+            } else {
+              throw new Error("Gagal mengambil pesan dari API kedua.");
+            }
+          } catch (error) {
+            console.error("Kedua API gagal:", error);
+            Swal.fire({
+              icon: "error",
+              title: "Terjadi Kesalahan!",
+              text: "Gagal mengambil pesan dari kedua API. Coba lagi nanti.",
+            });
+            return;
+          }
+        }
+    
+        const messagesList = document.getElementById("messagesList");
+    
+        if (messages["hydra:member"] && messages["hydra:member"].length > 0) {
+          messagesList.innerHTML = "";
+          messages["hydra:member"].forEach((message) => {
+            const listItem = document.createElement("li");
+            listItem.classList.add("messageItem");
+    
+            const profileImage = generateProfileImage(message.from.name);
+    
+            listItem.innerHTML = `
+              <img src="${profileImage}" alt="Avatar Pengirim">
+              <div>
+                <div class="messageHeader">
+                  ${message.from.name} <span style="color: #bababa;"><br>✉️ ${message.from.address}</span>
+                </div>
+                <div class="messageSubject">
+                  Subjek: ${message.subject}
+                </div>
+              </div>
+            `;
+            listItem.onclick = () => {
+              window.location.href = `message1.html?messageId=${message.id}`;
+            };
+    
+            messagesList.appendChild(listItem);
+          });
+        } else {
+          messagesList.innerHTML =
+            '<li class="noMessages">Tidak ada pesan yang diterima.</li>';
+        }
+      }
+    
+      function generateProfileImage(name) {
+        const initials = name.charAt(0).toUpperCase();
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        const size = 50;
+    
+        canvas.width = size;
+        canvas.height = size;
+    
+        ctx.beginPath();
+        ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+        ctx.fillStyle = "#0078d4";
+        ctx.fill();
+    
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 24px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(initials, size / 2, size / 2);
+    
+        return canvas.toDataURL();
+      }
+    
+      async function getMessageDetails(messageId) {
+        let response;
+        let messageDetails;
+    
+        // Coba API pertama (api.mail.tm)
+        try {
+          response = await fetch(`https://api.mail.tm/messages/${messageId}`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+    
+          if (response.ok) {
+            messageDetails = await response.json();
+          } else {
+            throw new Error("Gagal mengambil detail pesan dari API pertama.");
+          }
+        } catch (error) {
+          console.log("API pertama gagal, mencoba API kedua...");
+          // Jika API pertama gagal, coba API kedua (api.mail.gw)
+          try {
+            response = await fetch(`https://api.mail.gw/messages/${messageId}`, {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+    
+            if (response.ok) {
+              messageDetails = await response.json();
+            } else {
+              throw new Error("Gagal mengambil detail pesan dari API kedua.");
+            }
+          } catch (error) {
+            console.error("Kedua API gagal:", error);
+            alert("Gagal mengambil detail pesan.");
+            return;
+          }
+        }
+    
+        Swal.fire({
+          title: `Subjek: ${messageDetails.subject}`,
+          html: `
+            <div style="text-align: left;">
+              <strong>Pengirim:</strong> ${messageDetails.from.name} (${messageDetails.from.address})<br>
+              <strong>Isi Pesan:</strong> <br>${messageDetails.text}
+              ${
+                messageDetails.attachments
+                  ? `<br><strong>Lampiran:</strong> <a href="${messageDetails.attachments[0].url}" target="_blank">Download Lampiran</a>`
+                  : ""
+              }
+            </div>
+          `,
+          icon: "info",
+          confirmButtonText: "Tutup",
+          width: "80%",
+          heightAuto: true,
+          customClass: { popup: "popup-custom" },
+        });
+      }
+    
+      function signOut() {
+        localStorage.removeItem("token");
+        window.location.href = "https://mail.Arufkuy.my.id";
+      }
+    
+      function refreshPage() {
+        location.reload();
+      }
+    
+      // Panggil fungsi getMessages saat halaman dimuat
+      getMessages();
+    </script>
+    
+      <footer style="text-align: center; color: #bbb; padding: 1rem 0;">
+        <p>© Arufkuy 2025 | <a href="mailto:nazhrilprivate@gmail.com" style="color: #bbb;">nazhrilprivate@gmail.com</a></p>
+        <p>API by <a href="https://mail.tm" target="_blank" style="color: #bbb;">mail.tm</a></p>
+      </footer>
+    </body>
+    
+  </body>
+</html>
