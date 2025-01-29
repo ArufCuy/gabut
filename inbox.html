@@ -12,106 +12,129 @@
 
     <!-- CSS Styling -->
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f7f6;
-            color: #333;
-        }
+/* layout/base.css */
+:root {
+    --htmlFontSize: 100%;
+    --bodyBackgroundColor: #2c3338;
+    --bodyColor: var(--baseColor);
+    --bodyFontFamily: "Open Sans";
+    --bodyFontFamilyFallback: sans-serif;
+    --bodyFontSize: 0.875rem;
+    --bodyFontWeight: 400;
+    --bodyLineHeight: 1.5;
+    --buttonColor: #fff;
+    --buttonBackgroundColor: #ea4c88;
+    --buttonHoverColor: #fff;
+    --buttonHoverBackgroundColor: #d44179;
+}
 
-        h1 {
-            text-align: center;
-            color: #1a73e8;
-            margin-top: 20px;
-        }
+* {
+    box-sizing: inherit;
+}
 
-        #header {
-            text-align: center;
-            margin-top: 20px;
-        }
+html {
+    box-sizing: border-box;
+    font-size: var(--htmlFontSize);
+}
 
-        #header button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #1a73e8;
-            color: white;
-            margin: 5px;
-            transition: background-color 0.3s;
-        }
+body {
+    background-color: var(--bodyBackgroundColor);
+    color: var(--bodyColor);
+    font-family: var(--bodyFontFamily), var(--bodyFontFamilyFallback);
+    font-size: var(--bodyFontSize);
+    font-weight: var(--bodyFontWeight);
+    line-height: var(--bodyLineHeight);
+    margin: 0;
+    min-block-size: 100vh;
+}
 
-        #header button:hover {
-            background-color: #005f8a;
-        }
+/* layout/header.css */
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--bodyBackgroundColor);
+    color: var(--bodyColor);
+}
 
-        #messagesContainer {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
+#header button {
+    padding: 0.5rem 1rem;
+    background-color: var(--buttonBackgroundColor);
+    color: var(--buttonColor);
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
 
-        #messagesList {
-            list-style-type: none;
-            padding: 0;
-        }
+#header button:hover {
+    background-color: var(--buttonHoverBackgroundColor);
+    color: var(--buttonHoverColor);
+}
 
-        .messageItem {
-            background-color: #fafafa;
-            margin: 10px 0;
-            padding: 15px;
-            border-radius: 6px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+/* layout/messages.css */
+#messagesContainer {
+    padding: 2rem;
+    color: var(--bodyColor);
+}
 
-        .messageItem:hover {
-            background-color: #e1e1e1;
-        }
+h1, h2 {
+    color: var(--bodyColor);
+    text-align: center;
+}
 
-        .messageHeader {
-            font-weight: 500;
-            font-size: 16px;
-            color: #333;
-        }
+#messagesList {
+    list-style: none;
+    padding: 0;
+}
 
-        .messageSubject {
-            font-weight: 400;
-            color: #555;
-            margin-top: 5px;
-        }
+.messageItem {
+    background-color: #3b4148;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-        .noMessages {
-            text-align: center;
-            color: #888;
-            font-style: italic;
-            padding: 20px;
-        }
+.messageItem:hover {
+    background-color: #434a52;
+}
 
-        .messageActions {
-            margin-top: 10px;
-        }
-        
-        .button {
-            padding: 8px 16px;
-            font-size: 14px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #1a73e8;
-            color: white;
-            transition: background-color 0.3s;
-        }
+.messageHeader {
+    font-weight: bold;
+}
 
-        .button:hover {
-            background-color: #005f8a;
-        }
+.messageActions {
+    margin-top: 1rem;
+}
+
+.messageActions button {
+    padding: 0.5rem 1rem;
+    background-color: #ea4c88;
+    color: #fff;
+    border: none;
+    border-radius: 0.25rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.messageActions button:hover {
+    background-color: #d44179;
+}
+
+/* modules/text.css */
+p {
+    margin-block: 1.5rem;
+}
+
+.text--center {
+    text-align: center;
+}
+
     </style>
 </head>
 <body>
@@ -282,6 +305,5 @@
         // Panggil fungsi untuk mendapatkan pesan setelah halaman dimuat
         getMessages();
     </script>
-
 </body>
 </html>
