@@ -104,6 +104,21 @@
           padding: 1rem;
         }
       }
+      /* Menambahkan style untuk menangani teks panjang */
+#messageDetails {
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  padding: 20px;
+}
+
+#messageDetails a {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
     </style>
   </head>
   <body>
@@ -148,7 +163,7 @@
               messageDetails.from.address
             })<br>
                 <strong>Subjek:</strong> ${messageDetails.subject}<br>
-                <strong>Isi Pesan:</strong> <br>${messageDetails.text}
+                <strong>Pesan:</strong> <br>${messageDetails.text}
                 ${
                   messageDetails.attachments
                     ? `<br><strong>Lampiran:</strong> <a href="${messageDetails.attachments[0].url}" target="_blank">Download Lampiran</a>`
