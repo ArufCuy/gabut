@@ -1,0 +1,367 @@
+<style type="text/css">
+/* design by www.wendycode.com */
+:root {
+  --defaultColor: #f89000;
+}
+.container {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  top: 0px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: var(--themeBg);
+}
+.hidden,
+#iframe_uexxnchh {
+  display: none;
+}
+.container-login {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  margin: auto -40px;
+  background: var(--themeBg);
+  width: calc(100% + 80px);
+  z-index: 99999;
+}
+.container-login a {
+  text-decoration: none;
+}
+.form {
+  background-color: var(--themeBg);
+  box-shadow: 0 10px 25px -3px rgb(0 0 0 / 10%);
+  height: calc(100% - 200px);
+  color: inherit;
+  padding: 20px;
+  margin: auto;
+  border-radius: 20px;
+  border: 1px solid var(--sideBd-color);
+  width: calc(100% - 50px);
+  max-width: 350px;
+  box-sizing: border-box;
+}
+.form::before {
+  content: "LOGIN";
+  width: 100%;
+  position: relative;
+  display: flex;
+  text-align: center;
+  z-index: 99999999999;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+.input {
+  position: relative;
+}
+.container .input input,
+.wrapPop .input input {
+  padding: 12px;
+  padding-left: 45px;
+  border: 1px solid var(--sideBd-color);
+  border-radius: 25px;
+  font: inherit;
+  color: var(--themeC);
+  background-color: transparent;
+  margin: 10px auto;
+  width: 100%;
+  outline: none;
+  display: inline;
+}
+.container .input input:focus,
+.wrapPop .input input:focus {
+  border-color: var(--defaultColor) !important;
+  background: transparent;
+}
+.container .input input:hover,
+.wrapPop .input input:hover {
+  border: 1px solid var(--sideBd-color);
+  background-color: transparent;
+}
+button.buttonx {
+  background-color: var(--defaultColor);
+  width: 100px;
+  border: none;
+  border-radius: 25px;
+  font-weight: 800;
+  color: #fefefe;
+  padding: 12px 0;
+  margin: 10px auto;
+  text-transform: uppercase;
+}
+span.lpPas {
+  background: transparent;
+  border: none;
+  outline: none;
+  text-align: left;
+  display: flex;
+  margin: auto 10px 10px;
+  font-size: 12px;
+  color: var(--themeC);
+}
+.button.ln svg {
+  margin-top: 2px;
+}
+.button.ln {
+  padding: 7px 10px;
+  opacity: 0.7;
+  border-radius: 25px;
+  margin-bottom: 15px;
+  margin-top: -3px;
+}
+.border-wrp {
+  margin: 10px auto;
+  color: rgb(182, 182, 182);
+  width: 300px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+}
+.border-bts {
+  border-color: var(--sideBd-color);
+  width: 100px;
+  border-top-style: solid;
+  border-top-width: 1px;
+}
+.spanor {
+  margin: -10px 10px 0;
+  text-transform: uppercase;
+  font-style: italic;
+}
+.wrapPop {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999999;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.startPop span {
+  font-weight: bold;
+}
+.startPop {
+  width: calc(100% - 50px);
+  max-width: 500px;
+  position: relative;
+  background: var(--themeBg);
+  border-radius: 10px;
+  border: 1px solid var(--sideBd-color);
+  color: inherit;
+  text-align: center;
+  padding: 20px 10px;
+  top: 150px;
+  margin: 20px auto;
+  box-shadow: 0 10px 20px rgb(0 0 0 / 20%);
+  -webkit-animation: slide-down 0.5s ease-out;
+  animation: slide-down 0.5s ease-out;
+}
+@-webkit-keyframes slide-down {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+  }
+}
+@keyframes slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.startPop p {
+  margin-top: 15px;
+  font-size: 14px;
+}
+svg.showPas {
+  width: 24px;
+  height: 24px;
+  fill: #bbb;
+  position: absolute;
+  margin-top: 25px;
+  right: 10px;
+  z-index: 1;
+}
+.icon1.hidden,
+.icon2.hidden {
+  display: none;
+}
+.icon2 path {
+  fill: var(--defaultColor);
+}
+.input.icon-email:before {
+  content: "";
+  z-index: 2;
+  position: absolute;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  width: 24px;
+  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' viewBox='0 0 24 24' fill='%23bbb'><path d='M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z'></path></svg>")
+    center / contain no-repeat;
+}
+.input.icon-pas:before {
+  content: "";
+  z-index: 2;
+  position: absolute;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  width: 24px;
+  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' viewBox='0 0 24 24' fill='%23bbb'><path d='M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z'></path></svg>")
+    center / contain no-repeat;
+}
+
+p.code {
+  margin-top: 5px;
+  font-size: 10px;
+  display: inline-block;
+  background: none;
+  color: var(--themeC);
+  user-select: inherit;
+}
+p.code a {
+  color: var(--themeC);
+  text-decoration: underline !important;
+}
+.swal2-container {
+z-index: 10000 !important;
+}
+</style>
+<div class='container'>
+    <div class='container-login'>
+        <div class='form'>
+            <svg style='width:80px;height:80px' viewBox='0 0 24 24'>
+                <path fill='#bbb' d='M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z'></path>
+            </svg>
+
+            <div class='input icon-email'>
+                <input type='email' name='email' id='email' placeholder='Email' autocomplete='off' />
+            </div>
+
+            <div class='input icon-pas'>
+                <input type='password' placeholder='Password' id='password' autocomplete='off' />
+                <i id='togglePassword'>
+                    <svg class='showPas icon1' viewBox='0 0 24 24'>
+                        <path d='M11.83,9L15,12.16C15,12.11 15,12.05 15,12A3,3 0 0,0 12,9C11.94,9 11.89,9 11.83,9M7.53,9.8L9.08,11.35C9.03,11.56 9,11.77 9,12A3,3 0 0,0 12,15C12.22,15 12.44,14.97 12.65,14.92L14.2,16.47C13.53,16.8 12.79,17 12,17A5,5 0 0,1 7,12C7,11.21 7.2,10.47 7.53,9.8M2,4.27L4.28,6.55L4.73,7C3.08,8.3 1.78,10 1,12C2.73,16.39 7,19.5 12,19.5C13.55,19.5 15.03,19.2 16.38,18.66L16.81,19.08L19.73,22L21,20.73L3.27,3M12,7A5,5 0 0,1 17,12C17,12.64 16.87,13.26 16.64,13.82L19.57,16.75C21.07,15.5 22.27,13.86 23,12C21.27,7.61 17,4.5 12,4.5C10.6,4.5 9.26,4.75 8,5.2L10.17,7.35C10.74,7.13 11.35,7 12,7Z' />
+                    </svg>
+                    <svg class='showPas icon2 hidden' viewBox='0 0 24 24'>
+                        <path d='M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z' />
+                    </svg>
+                </i>
+            </div>
+            <div class='input'>
+                <span id='logNotif' class='hidden'></span>
+            </div>
+                    
+            <button class='buttonx' id='loginBtn'>Login</button>
+            <div class='input'>
+                <p class='code'>Dengan menekan tombol login Anda mengakui bahwa Anda telah membaca dan memahami, serta setuju dengan semua <a href='https://www.arufkuy.my.id/p/terms-and-conditions.html'>Syarat Ketentuan</a> dan <a href='https://www.arufkuy.my.id/p/privacy-policy.html'>Kebijakan Privasi</a> yang berlaku.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const emailInput = document.getElementById("email");
+            const passwordInput = document.getElementById("password");
+            const loginBtn = document.getElementById("loginBtn");
+            const logNotif = document.getElementById("logNotif");
+            const togglePassword = document.getElementById("togglePassword");
+
+            // Cek apakah sudah ada token di localStorage, jika ada arahkan ke halaman inbox
+            if (localStorage.getItem("token")) {
+                window.location.href = "https://www.arufkuy.my.id/p/mailbox.html";
+            }
+
+            // Toggle password visibility
+            togglePassword.addEventListener("click", function() {
+                passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+            });
+
+            // Handle login button click
+            loginBtn.addEventListener("click", async function() {
+                const email = emailInput.value.trim();
+                const password = passwordInput.value.trim();
+
+                if (!email || !password) {
+                    logNotif.textContent = "Email dan password tidak boleh kosong!";
+                    logNotif.classList.remove("hidden");
+                    return;
+                }
+
+                try {
+                    const response = await fetch("https://api.mail.tm/token", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ address: email, password: password })
+                    });
+                    
+                    const data = await response.json();
+                    if (response.ok) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Login Berhasil!",
+                            text: "Selamat datang di Arufkuy Store",
+                        }).then(() => {
+                            localStorage.setItem("token", data.token);
+                            window.location.href = "https://www.arufkuy.my.id/p/mailbox.html"; // Arahkan ke inbox
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Login Gagal!",
+                            text: "Email atau password salah.",
+                        });
+                    }
+                } catch (error) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Terjadi Kesalahan!",
+                        text: "Coba lagi nanti.",
+                    });
+                }
+            });
+        });
+    </script>
+<script>
+function togglePasswords() {
+    var passwordField = document.getElementById('password');
+    var icon1 = document.querySelector('.showPas.icon1');
+    var icon2 = document.querySelector('.showPas.icon2');
+
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        icon1.classList.add('hidden');
+        icon2.classList.remove('hidden');
+    } else {
+        passwordField.type = 'password';
+        icon1.classList.remove('hidden');
+        icon2.classList.add('hidden');
+    }
+}
+</script>
