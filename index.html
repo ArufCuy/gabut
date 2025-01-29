@@ -1,335 +1,301 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inbox - Pesan Masuk</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --htmlFontSize: 100%;
-        --bodyBackgroundColor: #2c3338;
-        --bodyColor: var(--baseColor);
-        --bodyFontFamily: "Open Sans";
-        --bodyFontFamilyFallback: sans-serif;
-        --bodyFontSize: 0.875rem;
-        --bodyFontWeight: 400;
-        --bodyLineHeight: 1.5;
-        --buttonColor: #fff;
-        --buttonBackgroundColor: #ea4c88;
-        --buttonHoverColor: #fff;
-        --buttonHoverBackgroundColor: #d44179;
-      }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Arufkuy Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style type="text/css">
+@use postcss-preset-env {
+	 stage: 0;
+}
+/* config.css */
+ :root {
+	 --baseColor: #606468;
+}
+/* helpers/align.css */
+ .align {
+	 display: grid;
+	 place-items: center;
+}
+ .grid {
+	 inline-size: 90%;
+	 margin-inline: auto;
+	 max-inline-size: 20rem;
+}
+/* helpers/hidden.css */
+ .hidden {
+	 border: 0;
+	 clip: rect(0 0 0 0);
+	 height: 1px;
+	 margin: -1px;
+	 overflow: hidden;
+	 padding: 0;
+	 position: absolute;
+	 width: 1px;
+}
+/* helpers/icon.css */
+ :root {
+	 --iconFill: var(--baseColor);
+}
+ .icons {
+	 display: none;
+}
+ .icon {
+	 block-size: 1em;
+	 display: inline-block;
+	 fill: var(--iconFill);
+	 inline-size: 1em;
+	 vertical-align: middle;
+}
+/* layout/base.css */
+ :root {
+	 --htmlFontSize: 100%;
+	 --bodyBackgroundColor: #2c3338;
+	 --bodyColor: var(--baseColor);
+	 --bodyFontFamily: "Open Sans";
+	 --bodyFontFamilyFallback: sans-serif;
+	 --bodyFontSize: 0.875rem;
+	 --bodyFontWeight: 400;
+	 --bodyLineHeight: 1.5;
+}
+ * {
+	 box-sizing: inherit;
+}
+ html {
+	 box-sizing: border-box;
+	 font-size: var(--htmlFontSize);
+}
+ body {
+	 background-color: var(--bodyBackgroundColor);
+	 color: var(--bodyColor);
+	 font-family: var(--bodyFontFamily), var(--bodyFontFamilyFallback);
+	 font-size: var(--bodyFontSize);
+	 font-weight: var(--bodyFontWeight);
+	 line-height: var(--bodyLineHeight);
+	 margin: 0;
+	 min-block-size: 100vh;
+}
+/* modules/anchor.css */
+ :root {
+	 --anchorColor: #eee;
+}
+ a {
+	 color: var(--anchorColor);
+	 outline: 0;
+	 text-decoration: none;
+}
+ a:focus, a:hover {
+	 text-decoration: underline;
+}
+/* modules/form.css */
+ :root {
+	 --formGap: 0.875rem;
+}
+ input {
+	 background-image: none;
+	 border: 0;
+	 color: inherit;
+	 font: inherit;
+	 margin: 0;
+	 outline: 0;
+	 padding: 0;
+	 transition: background-color 0.3s;
+}
+ input[type="submit"] {
+	 cursor: pointer;
+}
+ .form {
+	 display: grid;
+	 gap: var(--formGap);
+}
+ .form input[type="password"], .form input[type="text"], .form input[type="submit"] {
+	 inline-size: 100%;
+}
+ .form__field {
+	 display: flex;
+}
+ .form__input {
+	 flex: 1;
+}
+/* modules/login.css */
+ :root {
+	 --loginBorderRadus: 0.25rem;
+	 --loginColor: #eee;
+	 --loginInputBackgroundColor: #3b4148;
+	 --loginInputHoverBackgroundColor: #434a52;
+	 --loginLabelBackgroundColor: #363b41;
+	 --loginSubmitBackgroundColor: #ea4c88;
+	 --loginSubmitColor: #eee;
+	 --loginSubmitHoverBackgroundColor: #d44179;
+}
+ .login {
+	 color: var(--loginColor);
+}
+ .login label, .login input[type="text"], .login input[type="password"], .login input[type="submit"] {
+	 border-radius: var(--loginBorderRadus);
+	 padding: 1rem;
+}
+ .login label {
+	 background-color: var(--loginLabelBackgroundColor);
+	 border-bottom-right-radius: 0;
+	 border-top-right-radius: 0;
+	 padding-inline: 1.25rem;
+}
+ .login input[type="password"], .login input[type="text"] {
+	 background-color: var(--loginInputBackgroundColor);
+	 border-bottom-left-radius: 0;
+	 border-top-left-radius: 0;
+}
+ .login input[type="password"]:focus, .login input[type="password"]:hover, .login input[type="text"]:focus, .login input[type="text"]:hover {
+	 background-color: var(--loginInputHoverBackgroundColor);
+}
+ .login input[type="submit"] {
+	 background-color: var(--loginSubmitBackgroundColor);
+	 color: var(--loginSubmitColor);
+	 font-weight: 700;
+	 text-transform: uppercase;
+}
+ .login input[type="submit"]:focus, .login input[type="submit"]:hover {
+	 background-color: var(--loginSubmitHoverBackgroundColor);
+}
+/* modules/text.css */
+ p {
+	 margin-block: 1.5rem;
+}
+ .text--center {
+	 text-align: center;
+}
+</style>
+</head>
+<body class="align">
 
-      * {
-        box-sizing: inherit;
-      }
+  <div class="grid">
 
-      html {
-        box-sizing: border-box;
-        font-size: var(--htmlFontSize);
-      }
+    <form class="form login">
 
-      body {
-        background-color: var(--bodyBackgroundColor);
-        color: var(--bodyColor);
-        font-family: var(--bodyFontFamily), var(--bodyFontFamilyFallback);
-        font-size: var(--bodyFontSize);
-        font-weight: var(--bodyFontWeight);
-        line-height: var(--bodyLineHeight);
-        margin: 0;
-        min-block-size: 100vh;
-      }
+      <div class="form__field">
+        <label for="login__username"><svg class="icon">
+            <use xlink:href="#icon-user"></use>
+          </svg><span class="hidden">Username</span></label>
+        <input autocomplete="username" id="login__username" type="text" name="username" class="form__input" placeholder="Username" required>
+      </div>
 
-      #header {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        padding: 1rem;
-        background-color: var(--bodyBackgroundColor);
-        color: var(--bodyColor);
-      }
+      <div class="form__field">
+        <label for="login__password"><svg class="icon">
+            <use xlink:href="#icon-lock"></use>
+          </svg><span class="hidden">Password</span></label>
+        <input id="login__password" type="password" name="password" class="form__input" placeholder="Password" required>
+      </div>
 
-      #header button {
-        padding: 0.5rem 1rem;
-        background-color: var(--buttonBackgroundColor);
-        color: var(--buttonColor);
-        border: none;
-        border-radius: 0.25rem;
-        cursor: pointer;
-        font-weight: bold;
-        transition: background-color 0.3s;
-      }
+      <div class="form__field">
+        <input type="submit" value="Sign In">
+      </div>
 
-      #header button:hover {
-        background-color: var(--buttonHoverBackgroundColor);
-        color: var(--buttonHoverColor);
-      }
+    </form>
 
-      #messagesContainer {
-        padding: 2rem;
-        color: var(--bodyColor);
-      }
+  </div>
 
-      h1 {
-        color: #ffffff;
-        text-align: center;
-      }
+  <svg xmlns="http://www.w3.org/2000/svg" class="icons">
+    <symbol id="icon-arrow-right" viewBox="0 0 1792 1792">
+      <path d="M1600 960q0 54-37 91l-651 651q-39 37-91 37-51 0-90-37l-75-75q-38-38-38-91t38-91l293-293H245q-52 0-84.5-37.5T128 1024V896q0-53 32.5-90.5T245 768h704L656 474q-38-36-38-90t38-90l75-75q38-38 90-38 53 0 91 38l651 651q37 35 37 90z" />
+    </symbol>
+    <symbol id="icon-lock" viewBox="0 0 1792 1792">
+      <path d="M640 768h512V576q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28H416q-40 0-68-28t-28-68V864q0-40 28-68t68-28h32V576q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z" />
+    </symbol>
+    <symbol id="icon-user" viewBox="0 0 1792 1792">
+      <path d="M1600 1405q0 120-73 189.5t-194 69.5H459q-121 0-194-69.5T192 1405q0-53 3.5-103.5t14-109T236 1084t43-97.5 62-81 85.5-53.5T538 832q9 0 42 21.5t74.5 48 108 48T896 971t133.5-21.5 108-48 74.5-48 42-21.5q61 0 111.5 20t85.5 53.5 62 81 43 97.5 26.5 108.5 14 109 3.5 103.5zm-320-893q0 159-112.5 271.5T896 896 624.5 783.5 512 512t112.5-271.5T896 128t271.5 112.5T1280 512z" />
+    </symbol>
+  </svg>
 
-      h2 {
-        color: var(--bodyColor);
-        text-align: center;
-      }
+</body>
 
-      #messagesList {
-        list-style: none;
-        padding: 0;
-      }
-
-      .messageItem {
-        display: flex;
-        align-items: center;
-        background-color: #3b4148;
-        margin-bottom: 1rem;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        flex-wrap: wrap;
-      }
-
-      .messageItem:hover {
-        background-color: #434a52;
-      }
-
-      .messageItem img {
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        margin-right: 1rem;
-      }
-
-      .messageHeader {
-        font-weight: bold;
-        color: #ffffff; /* Warna teks pengirim */
-      }
-
-      .messageSubject {
-        color: #bbb; /* Warna teks subjek */
-      }
-
-      .messageActions {
-        margin-top: 1rem;
-      }
-
-      .messageActions button {
-        padding: 0.5rem 1rem;
-        background-color: #ea4c88;
-        color: #fff;
-        border: none;
-        border-radius: 0.25rem;
-        margin-right: 0.5rem;
-        cursor: pointer;
-        transition: background-color 0.3s;
-      }
-
-      .messageActions button:hover {
-        background-color: #d44179;
-      }
-
-      @media (max-width: 768px) {
-        .messageItem {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-
-        .messageItem img {
-          margin-bottom: 1rem;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="header">
-      <button onclick="signOut()">Sign Out</button>
-    </div>
-    <h1>Inbox - Pesan Masuk</h1>
-
-    <div id="messagesContainer">
-      <h2 style="color: #ffffff">Pesan Masuk</h2>
-      <ul id="messagesList"></ul>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-      const token = localStorage.getItem("token");
+        document.addEventListener("DOMContentLoaded", function() {
+    const usernameInput = document.getElementById("login__username");
+    const passwordInput = document.getElementById("login__password");
+    const form = document.querySelector(".form.login"); // Formnya diambil dari class
+    const togglePassword = document.getElementById("togglePassword"); // Button untuk toggle password
 
-      if (!token) {
-        alert("Anda perlu login terlebih dahulu!");
-        window.location.href = "https://mail.Arufkuy.my.id";
-      }
+    // Cek apakah sudah ada token di localStorage, jika ada arahkan ke halaman inbox
+    if (localStorage.getItem("token")) {
+        window.location.href = "https://mail.arufkuy.my.id/inbox.html";
+    }
 
-      // Fungsi untuk mengambil data akun (termasuk email)
-      async function getAccountDetails() {
-        try {
-          const response = await fetch("https://api.mail.tm/accounts/me", {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (!response.ok) {
-            throw new Error("Gagal mengambil data akun");
-          }
-
-          const accountDetails = await response.json();
-          const accountId = accountDetails.id; // Ambil ID akun
-
-          // Ambil detail akun berdasarkan ID
-          const accountResponse = await fetch(
-            `https://api.mail.tm/accounts/${accountId}`,
-            {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-          if (!accountResponse.ok) {
-            throw new Error("Gagal mengambil detail akun berdasarkan ID");
-          }
-
-          const accountData = await accountResponse.json();
-          const email = accountData.address || "Email tidak ditemukan";
-          document.getElementById("emailBox").innerText = `Email: ${email}`;
-        } catch (error) {
-          console.error(error);
-          document.getElementById("emailBox").innerText =
-            "Gagal mengambil data akun.";
-        }
-      }
-
-      // Fungsi untuk mengambil pesan
-      async function getMessages() {
-        const response = await fetch("https://api.mail.tm/messages", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+    // Toggle password visibility
+    if (togglePassword) {
+        togglePassword.addEventListener("click", function() {
+            passwordInput.type = passwordInput.type === "password" ? "text" : "password";
         });
+    }
 
-        const messages = await response.json();
-        const messagesList = document.getElementById("messagesList");
+    // Handle form submit
+    form.addEventListener("submit", async function(event) {
+        event.preventDefault();  // Mencegah form submit otomatis
 
-        if (response.ok && messages["hydra:member"].length > 0) {
-          messagesList.innerHTML = "";
-          messages["hydra:member"].forEach((message) => {
-            const listItem = document.createElement("li");
-            listItem.classList.add("messageItem");
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
 
-            const profileImage = generateProfileImage(message.from.name);
-
-            listItem.innerHTML = `
-              <img src="${profileImage}" alt="Avatar Pengirim">
-              <div>
-                <div class="messageHeader">
-                  ${message.from.name} <span style="color: #bababa;"><br>✉️ ${message.from.address}</span>
-                </div>
-                <div class="messageSubject">
-                  Subjek: ${message.subject}
-                </div>
-              </div>
-            `;
-            listItem.onclick = () => {
-              window.location.href = `message.html?messageId=${message.id}`;
-            };
-
-            messagesList.appendChild(listItem);
-          });
-        } else {
-          messagesList.innerHTML =
-            '<li class="noMessages">Tidak ada pesan yang diterima.</li>';
+        if (!username || !password) {
+            Swal.fire({
+                icon: "error",
+                title: "Login Gagal!",
+                text: "Username atau password tidak boleh kosong.",
+            });
+            return;
         }
-      }
 
-      function generateProfileImage(name) {
-        const initials = name.charAt(0).toUpperCase();
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-        const size = 50;
+        try {
+            const response = await fetch("https://api.mail.tm/token", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ address: username, password: password })
+            });
 
-        canvas.width = size;
-        canvas.height = size;
-
-        ctx.beginPath();
-        ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
-        ctx.fillStyle = "#0078d4";
-        ctx.fill();
-
-        ctx.fillStyle = "#ffffff";
-        ctx.font = "bold 24px Arial";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText(initials, size / 2, size / 2);
-
-        return canvas.toDataURL();
-      }
-
-      async function getMessageDetails(messageId) {
-        const response = await fetch(
-          `https://api.mail.tm/messages/${messageId}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        const messageDetails = await response.json();
-        if (response.ok) {
-          Swal.fire({
-            title: `Subjek: ${messageDetails.subject}`,
-            html: `
-              <div style="text-align: left;">
-                <strong>Pengirim:</strong> ${messageDetails.from.name} (${
-              messageDetails.from.address
-            })<br>
-                <strong>Isi Pesan:</strong> <br>${messageDetails.text}
-                ${
-                  messageDetails.attachments
-                    ? `<br><strong>Lampiran:</strong> <a href="${messageDetails.attachments[0].url}" target="_blank">Download Lampiran</a>`
-                    : ""
-                }
-              </div>
-            `,
-            icon: "info",
-            confirmButtonText: "Tutup",
-            width: "80%",
-            heightAuto: true,
-            customClass: { popup: "popup-custom" },
-          });
-        } else {
-          alert("Gagal mengambil detail pesan.");
+            const data = await response.json();
+            if (response.ok) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Login Berhasil!",
+                    text: "Ambil verifikasimu di inbox",
+                }).then(() => {
+                    localStorage.setItem("token", data.token);
+                    window.location.href = "https://www.arufkuy.my.id/inbox.html"; // Arahkan ke inbox
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Login Gagal!",
+                    text: "Username atau password salah.",
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Terjadi Kesalahan!",
+                text: "Coba lagi nanti.",
+            });
         }
-      }
-
-      function signOut() {
-        localStorage.removeItem("token");
-        window.location.href = "https://mail.Arufkuy.my.id";
-      }
-
-      getMessages();
+    });
+});
     </script>
-  </body>
+<script>
+function togglePasswords() {
+    var passwordField = document.getElementById('password');
+    var icon1 = document.querySelector('.showPas.icon1');
+    var icon2 = document.querySelector('.showPas.icon2');
+
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        icon1.classList.add('hidden');
+        icon2.classList.remove('hidden');
+    } else {
+        passwordField.type = 'password';
+        icon1.classList.remove('hidden');
+        icon2.classList.add('hidden');
+    }
+}
+</script>
+</body>
 </html>
