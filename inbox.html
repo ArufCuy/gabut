@@ -1,309 +1,335 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inbox - Pesan Masuk</title>
-    <!-- Link untuk Google Fonts (Font yang lebih bersih) -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    
-    <!-- SweetAlert2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.css" rel="stylesheet">
-
-    <!-- CSS Styling -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.css"
+      rel="stylesheet"
+    />
     <style>
-/* layout/base.css */
-:root {
-    --htmlFontSize: 100%;
-    --bodyBackgroundColor: #2c3338;
-    --bodyColor: var(--baseColor);
-    --bodyFontFamily: "Open Sans";
-    --bodyFontFamilyFallback: sans-serif;
-    --bodyFontSize: 0.875rem;
-    --bodyFontWeight: 400;
-    --bodyLineHeight: 1.5;
-    --buttonColor: #fff;
-    --buttonBackgroundColor: #ea4c88;
-    --buttonHoverColor: #fff;
-    --buttonHoverBackgroundColor: #d44179;
-}
+      :root {
+        --htmlFontSize: 100%;
+        --bodyBackgroundColor: #2c3338;
+        --bodyColor: var(--baseColor);
+        --bodyFontFamily: "Open Sans";
+        --bodyFontFamilyFallback: sans-serif;
+        --bodyFontSize: 0.875rem;
+        --bodyFontWeight: 400;
+        --bodyLineHeight: 1.5;
+        --buttonColor: #fff;
+        --buttonBackgroundColor: #ea4c88;
+        --buttonHoverColor: #fff;
+        --buttonHoverBackgroundColor: #d44179;
+      }
 
-* {
-    box-sizing: inherit;
-}
+      * {
+        box-sizing: inherit;
+      }
 
-html {
-    box-sizing: border-box;
-    font-size: var(--htmlFontSize);
-}
+      html {
+        box-sizing: border-box;
+        font-size: var(--htmlFontSize);
+      }
 
-body {
-    background-color: var(--bodyBackgroundColor);
-    color: var(--bodyColor);
-    font-family: var(--bodyFontFamily), var(--bodyFontFamilyFallback);
-    font-size: var(--bodyFontSize);
-    font-weight: var(--bodyFontWeight);
-    line-height: var(--bodyLineHeight);
-    margin: 0;
-    min-block-size: 100vh;
-}
+      body {
+        background-color: var(--bodyBackgroundColor);
+        color: var(--bodyColor);
+        font-family: var(--bodyFontFamily), var(--bodyFontFamilyFallback);
+        font-size: var(--bodyFontSize);
+        font-weight: var(--bodyFontWeight);
+        line-height: var(--bodyLineHeight);
+        margin: 0;
+        min-block-size: 100vh;
+      }
 
-/* layout/header.css */
-#header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: var(--bodyBackgroundColor);
-    color: var(--bodyColor);
-}
+      #header {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 1rem;
+        background-color: var(--bodyBackgroundColor);
+        color: var(--bodyColor);
+      }
 
-#header button {
-    padding: 0.5rem 1rem;
-    background-color: var(--buttonBackgroundColor);
-    color: var(--buttonColor);
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
-}
+      #header button {
+        padding: 0.5rem 1rem;
+        background-color: var(--buttonBackgroundColor);
+        color: var(--buttonColor);
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
 
-#header button:hover {
-    background-color: var(--buttonHoverBackgroundColor);
-    color: var(--buttonHoverColor);
-}
+      #header button:hover {
+        background-color: var(--buttonHoverBackgroundColor);
+        color: var(--buttonHoverColor);
+      }
 
-/* layout/messages.css */
-#messagesContainer {
-    padding: 2rem;
-    color: var(--bodyColor);
-}
+      #messagesContainer {
+        padding: 2rem;
+        color: var(--bodyColor);
+      }
 
-h1, h2 {
-    color: var(--bodyColor);
-    text-align: center;
-}
+      h1 {
+        color: #ffffff;
+        text-align: center;
+      }
 
-#messagesList {
-    list-style: none;
-    padding: 0;
-}
+      h2 {
+        color: var(--bodyColor);
+        text-align: center;
+      }
 
-.messageItem {
-    background-color: #3b4148;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+      #messagesList {
+        list-style: none;
+        padding: 0;
+      }
 
-.messageItem:hover {
-    background-color: #434a52;
-}
+      .messageItem {
+        display: flex;
+        align-items: center;
+        background-color: #3b4148;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        flex-wrap: wrap;
+      }
 
-.messageHeader {
-    font-weight: bold;
-}
+      .messageItem:hover {
+        background-color: #434a52;
+      }
 
-.messageActions {
-    margin-top: 1rem;
-}
+      .messageItem img {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        margin-right: 1rem;
+      }
 
-.messageActions button {
-    padding: 0.5rem 1rem;
-    background-color: #ea4c88;
-    color: #fff;
-    border: none;
-    border-radius: 0.25rem;
-    margin-right: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+      .messageHeader {
+        font-weight: bold;
+        color: #ffffff; /* Warna teks pengirim */
+      }
 
-.messageActions button:hover {
-    background-color: #d44179;
-}
+      .messageSubject {
+        color: #bbb; /* Warna teks subjek */
+      }
 
-/* modules/text.css */
-p {
-    margin-block: 1.5rem;
-}
+      .messageActions {
+        margin-top: 1rem;
+      }
 
-.text--center {
-    text-align: center;
-}
+      .messageActions button {
+        padding: 0.5rem 1rem;
+        background-color: #ea4c88;
+        color: #fff;
+        border: none;
+        border-radius: 0.25rem;
+        margin-right: 0.5rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
 
+      .messageActions button:hover {
+        background-color: #d44179;
+      }
+
+      @media (max-width: 768px) {
+        .messageItem {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .messageItem img {
+          margin-bottom: 1rem;
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="header">
-        <button onclick="getMessages()">Refresh</button>
-        <button onclick="signOut()">Sign Out</button>
+      <button onclick="signOut()">Sign Out</button>
     </div>
     <h1>Inbox - Pesan Masuk</h1>
-    
-    <!-- Daftar pesan akan ditampilkan di sini -->
+
     <div id="messagesContainer">
-        <h2>Pesan Masuk</h2>
-        <ul id="messagesList"></ul>
+      <h2 style="color: #ffffff">Pesan Masuk</h2>
+      <ul id="messagesList"></ul>
     </div>
 
-    <!-- SweetAlert2 Script -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.js"></script>
-    
+
     <script>
-        // Ambil token dari localStorage
-        const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token");
 
-        if (!token) {
-            alert("Anda perlu login terlebih dahulu!");
-            window.location.href = "https://mail.Arufkuy.my.id";  // Arahkan ke halaman login jika token tidak ada
-        }
+      if (!token) {
+        alert("Anda perlu login terlebih dahulu!");
+        window.location.href = "https://mail.Arufkuy.my.id";
+      }
 
-        // Fungsi untuk mengambil daftar pesan
-        async function getMessages() {
-            const response = await fetch("https://api.mail.tm/messages", {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                }
-            });
+      // Fungsi untuk mengambil data akun (termasuk email)
+      async function getAccountDetails() {
+        try {
+          const response = await fetch("https://api.mail.tm/accounts/me", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
-            const messages = await response.json();
+          if (!response.ok) {
+            throw new Error("Gagal mengambil data akun");
+          }
 
-            const messagesList = document.getElementById("messagesList");
+          const accountDetails = await response.json();
+          const accountId = accountDetails.id; // Ambil ID akun
 
-            if (response.ok && messages["hydra:member"].length > 0) {
-                messagesList.innerHTML = "";  // Kosongkan daftar pesan yang ada
-                messages["hydra:member"].forEach(message => {
-                    const listItem = document.createElement("li");
-                    listItem.classList.add("messageItem");
-                    listItem.innerHTML = `
-                        <div class="messageHeader">
-                            Dari: ${message.from.name} (${message.from.address})
-                        </div>
-                        <div class="messageSubject">
-                            Subjek: ${message.subject}
-                        </div>
-                        <div class="messageActions">
-                            <button class="button" onclick="deleteMessage(${message.id})">Hapus</button>
-                            <button class="button" onclick="replyMessage(${message.id})">Balas</button>
-                        </div>
-                    `;
-                    listItem.onclick = () => getMessageDetails(message.id);  // Tampilkan detail pesan saat diklik
-                    messagesList.appendChild(listItem);
-                });
-            } else {
-                messagesList.innerHTML = '<li class="noMessages">Tidak ada pesan yang diterima.</li>';
+          // Ambil detail akun berdasarkan ID
+          const accountResponse = await fetch(
+            `https://api.mail.tm/accounts/${accountId}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             }
-        }
+          );
 
-        // Fungsi untuk mendapatkan detail pesan
-        async function getMessageDetails(messageId) {
-            const response = await fetch(`https://api.mail.tm/messages/${messageId}`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
+          if (!accountResponse.ok) {
+            throw new Error("Gagal mengambil detail akun berdasarkan ID");
+          }
+
+          const accountData = await accountResponse.json();
+          const email = accountData.address || "Email tidak ditemukan";
+          document.getElementById("emailBox").innerText = `Email: ${email}`;
+        } catch (error) {
+          console.error(error);
+          document.getElementById("emailBox").innerText =
+            "Gagal mengambil data akun.";
+        }
+      }
+
+      // Fungsi untuk mengambil pesan
+      async function getMessages() {
+        const response = await fetch("https://api.mail.tm/messages", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const messages = await response.json();
+        const messagesList = document.getElementById("messagesList");
+
+        if (response.ok && messages["hydra:member"].length > 0) {
+          messagesList.innerHTML = "";
+          messages["hydra:member"].forEach((message) => {
+            const listItem = document.createElement("li");
+            listItem.classList.add("messageItem");
+
+            const profileImage = generateProfileImage(message.from.name);
+
+            listItem.innerHTML = `
+              <img src="${profileImage}" alt="Avatar Pengirim">
+              <div>
+                <div class="messageHeader">
+                  ${message.from.name} <span style="color: #bababa;"><br>✉️ ${message.from.address}</span>
+                </div>
+                <div class="messageSubject">
+                  Subjek: ${message.subject}
+                </div>
+              </div>
+            `;
+            listItem.onclick = () => {
+              window.location.href = `message.html?messageId=${message.id}`;
+            };
+
+            messagesList.appendChild(listItem);
+          });
+        } else {
+          messagesList.innerHTML =
+            '<li class="noMessages">Tidak ada pesan yang diterima.</li>';
+        }
+      }
+
+      function generateProfileImage(name) {
+        const initials = name.charAt(0).toUpperCase();
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        const size = 50;
+
+        canvas.width = size;
+        canvas.height = size;
+
+        ctx.beginPath();
+        ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+        ctx.fillStyle = "#0078d4";
+        ctx.fill();
+
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 24px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(initials, size / 2, size / 2);
+
+        return canvas.toDataURL();
+      }
+
+      async function getMessageDetails(messageId) {
+        const response = await fetch(
+          `https://api.mail.tm/messages/${messageId}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const messageDetails = await response.json();
+        if (response.ok) {
+          Swal.fire({
+            title: `Subjek: ${messageDetails.subject}`,
+            html: `
+              <div style="text-align: left;">
+                <strong>Pengirim:</strong> ${messageDetails.from.name} (${
+              messageDetails.from.address
+            })<br>
+                <strong>Isi Pesan:</strong> <br>${messageDetails.text}
+                ${
+                  messageDetails.attachments
+                    ? `<br><strong>Lampiran:</strong> <a href="${messageDetails.attachments[0].url}" target="_blank">Download Lampiran</a>`
+                    : ""
                 }
-            });
-
-            const messageDetails = await response.json();
-            if (response.ok) {
-                // Menampilkan detail pesan dalam bentuk popup SweetAlert
-                Swal.fire({
-                    title: `Subjek: ${messageDetails.subject}`,
-                    html: `
-                        <div style="text-align: left;">
-                            <strong>Pengirim:</strong> ${messageDetails.from.name} (${messageDetails.from.address})<br>
-                            <strong>Isi Pesan:</strong> <br>${messageDetails.text}
-                            ${messageDetails.attachments ? `<br><strong>Lampiran:</strong> <a href="${messageDetails.attachments[0].url}" target="_blank">Download Lampiran</a>` : ''}
-                        </div>
-                    `,
-                    icon: 'info',
-                    confirmButtonText: 'Tutup',
-                    width: '80%',
-                    heightAuto: true,  // Menyesuaikan ukuran sesuai layar
-                    customClass: {
-                        popup: 'popup-custom' // Menambahkan kelas custom untuk pop-up
-                    }
-                });
-            } else {
-                alert("Gagal mengambil detail pesan.");
-            }
+              </div>
+            `,
+            icon: "info",
+            confirmButtonText: "Tutup",
+            width: "80%",
+            heightAuto: true,
+            customClass: { popup: "popup-custom" },
+          });
+        } else {
+          alert("Gagal mengambil detail pesan.");
         }
+      }
 
-        // Fungsi untuk menghapus pesan
-        async function deleteMessage(messageId) {
-            const response = await fetch(`https://api.mail.tm/messages/${messageId}`, {
-                method: "DELETE",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                }
-            });
+      function signOut() {
+        localStorage.removeItem("token");
+        window.location.href = "https://mail.Arufkuy.my.id";
+      }
 
-            if (response.ok) {
-                Swal.fire({
-                    title: 'Pesan Dihapus',
-                    text: 'Pesan berhasil dihapus.',
-                    icon: 'success',
-                    confirmButtonText: 'Tutup'
-                });
-                getMessages(); // Refresh daftar pesan setelah penghapusan
-            } else {
-                alert("Gagal menghapus pesan.");
-            }
-        }
-
-        // Fungsi untuk membalas pesan
-        async function replyMessage(messageId) {
-            const response = await fetch(`https://api.mail.tm/messages/${messageId}`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                }
-            });
-
-            const messageDetails = await response.json();
-            if (response.ok) {
-                const reply = prompt(`Balas ke ${messageDetails.from.name}:`, `Re: ${messageDetails.subject}`);
-                if (reply) {
-                    const sendResponse = await fetch("https://api.mail.tm/messages", {
-                        method: "POST",
-                        headers: {
-                            "Authorization": `Bearer ${token}`,
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            to: [messageDetails.from.address],
-                            subject: `Re: ${messageDetails.subject}`,
-                            text: reply,
-                        })
-                    });
-
-                    if (sendResponse.ok) {
-                        Swal.fire({
-                            title: 'Balasan Dikirim',
-                            text: 'Balasan Anda berhasil dikirim.',
-                            icon: 'success',
-                            confirmButtonText: 'Tutup'
-                        });
-                    } else {
-                        alert("Gagal mengirim balasan.");
-                    }
-                }
-            }
-        }
-
-        // Fungsi untuk logout
-        function signOut() {
-            localStorage.removeItem("token");
-            window.location.href = "https://mail.arufkuy.my.id";  // Arahkan ke halaman login
-        }
-
-        // Panggil fungsi untuk mendapatkan pesan setelah halaman dimuat
-        getMessages();
+      getMessages();
     </script>
-</body>
+  </body>
 </html>
