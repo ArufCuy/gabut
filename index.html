@@ -245,13 +245,17 @@ p {
           const data = await response.json();
           if (response.ok) {
               Swal.fire({
-                  icon: "success",
-                  title: "Login Berhasil!",
-                  text: "Selamat Datang! 😊",
-              }).then(() => {
-                  localStorage.setItem("token", data.token);
-                  window.location.href = "https://mail.arufkuy.my.id/inbox.html"; // Arahkan ke inbox
+              icon: "success",
+              title: "Login Berhasil!",
+              text: "Selamat Datang! 😊",
+              timer: 1500,  // Popup otomatis hilang setelah 1.5 detik
+              showConfirmButton: false  // Hilangkan tombol OK
               });
+
+localStorage.setItem("token", data.token);
+setTimeout(() => {
+    window.location.href = "https://mail.arufkuy.my.id/inbox.html"; // Arahkan ke inbox
+}, 1500);
           } else {
               Swal.fire({
                   icon: "error",
