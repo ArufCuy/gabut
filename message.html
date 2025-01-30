@@ -141,19 +141,27 @@
   </head>
   <body>
     <div id="header">
-      <button onclick="signOut()" >Sign Out</button>
+      <button onclick="signOut()">Sign Out</button>
     </div>
     <h1>Detail Pesan</h1>
     <div id="messageDetails">
       <!-- Detail pesan akan ditampilkan di sini -->
     </div>
     <!-- Tombol Hapus Pesan -->
-    <button id="deleteMessageButton" onclick="deleteMessage()" style="margin-left: 20px;">Hapus Pesan</button>
+    <button
+      id="deleteMessageButton"
+      onclick="deleteMessage()"
+      style="margin-left: 20px"
+    >
+      Hapus Pesan
+    </button>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.js"></script>
     <script>
       const token = localStorage.getItem("token");
-      const messageId = new URLSearchParams(window.location.search).get("messageId");
+      const messageId = new URLSearchParams(window.location.search).get(
+        "messageId"
+      );
 
       if (!token) {
         alert("Anda perlu login terlebih dahulu!");
@@ -177,9 +185,11 @@
           if (response.ok) {
             document.getElementById("messageDetails").innerHTML = `
               <div class="messageDetailsContainer">
-                <strong>Pengirim:</strong> ${messageDetails.from.name} (${messageDetails.from.address})<br>
+                <strong>Pengirim:</strong> ${messageDetails.from.name} (${
+              messageDetails.from.address
+            })<br>
                 <strong>Subjek:</strong> ${messageDetails.subject}<br>
-                <strong>Pesan:</strong> <br>${messageDetails.text}
+                <strong>Pesan:</strong> <br>${convertLinks(messageDetails.text)}
                 ${
                   messageDetails.attachments
                     ? `<br><strong>Lampiran:</strong> <a href="${messageDetails.attachments[0].url}" target="_blank">Download Lampiran</a>`
@@ -187,9 +197,16 @@
                 }
               </div>
             `;
+            function convertLinks(text) {
+              return text.replace(
+                /(https?:\/\/[^\s]+)/g,
+                '<a href="$1" target="_blank">$1</a>'
+              );
+            }
 
             // Menampilkan tombol Hapus Pesan setelah pesan berhasil dimuat
-            document.getElementById("deleteMessageButton").style.display = "inline-block";
+            document.getElementById("deleteMessageButton").style.display =
+              "inline-block";
 
             // Setelah pesan berhasil dimuat, tandai sebagai telah dibaca
             markAsRead();
