@@ -26,7 +26,6 @@
         --buttonBackgroundColor: #ea4c88;
         --buttonHoverColor: #fff;
         --buttonHoverBackgroundColor: #d44179;
-        --unreadMessageColor: #2e8b57;
         --readMessageColor: #434a52;
       }
 
@@ -87,7 +86,7 @@
 
       h2 {
         color: var(--bodyColor);
-        text-align: center;
+        text-align: left;
       }
 
       #messagesList {
@@ -164,14 +163,16 @@
   </head>
   <body>
     <div id="header">
-        <button onclick="refreshPage()" style="margin-right: 10px;">Refresh</button>
-        <button onclick="signOut()">Sign Out</button>
-      </div>
-      
+      <button onclick="refreshPage()" style="margin-right: 10px">
+        Refresh
+      </button>
+      <button onclick="signOut()">Sign Out</button>
+    </div>
+
     <h1>Inbox - Pesan Masuk</h1>
 
     <div id="messagesContainer">
-      <h2 style="color: #ffffff">Pesan Masuk</h2>
+      <h2 style="color: #ffffff">📪Pesan Masuk</h2>
       <ul id="messagesList"></ul>
     </div>
 
@@ -202,10 +203,6 @@
           messages["hydra:member"].forEach((message) => {
             const listItem = document.createElement("li");
             listItem.classList.add("messageItem");
-
-            if (message.read === false) {
-              listItem.classList.add("unread");
-            }
 
             const profileImage = generateProfileImage(message.from.name);
 
@@ -305,11 +302,19 @@
 
       getMessages();
     </script>
-      <footer style="text-align: center; color: #bbb; padding: 1rem 0;">
-        <p>© Arufkuy 2025 | <a href="mailto:nazhrilprivate@gmail.com" style="color: #bbb;">nazhrilprivate@gmail.com</a></p>
-        <p>API by <a href="https://mail.tm" target="_blank" style="color: #bbb;">mail.tm</a></p>
-      </footer>
-    </body>
-    
+    <footer style="text-align: center; color: #bbb; padding: 1rem 0">
+      <p>
+        © Arufkuy 2025 |
+        <a href="mailto:nazhrilprivate@gmail.com" style="color: #bbb"
+          >nazhrilprivate@gmail.com</a
+        >
+      </p>
+      <p>
+        API by
+        <a href="https://mail.tm" target="_blank" style="color: #bbb"
+          >mail.tm</a
+        >
+      </p>
+    </footer>
   </body>
 </html>
