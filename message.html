@@ -157,120 +157,135 @@
     </button>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.js"></script>
-    <script>
-      const token = localStorage.getItem("token");
-      const messageId = new URLSearchParams(window.location.search).get(
-        "messageId"
-      );
+<script>
+  const token = localStorage.getItem("token");
+  const messageId = new URLSearchParams(window.location.search).get("messageId");
 
-      // Tentukan domain API default
-      const apiDomain = "https://api.mail.tm"; // Default api.mail.tm
+  // Tentukan domain API yang digunakan
+  const apiDomains = [
+    "https://api.mail.tm", // api.mail.tm
+    "https://api.mail.gw", // api.mail.gw
+  ];
 
-      // Ganti domain ini jika ingin beralih ke api.mail.gw
-      // const apiDomain = "https://api.mail.gw"; // Contoh jika ingin menggunakan api.mail.gw
+  if (!token) {
+    alert("Anda perlu login terlebih dahulu!");
+    window.location.href = "https://mail.Arufkuy.my.id";
+  }
 
-      if (!token) {
-        alert("Anda perlu login terlebih dahulu!");
-        window.location.href = "https://mail.Arufkuy.my.id";
-      }
-
-      // Fungsi untuk mengambil detail pesan
-      async function getMessageDetails() {
-        try {
-          const response = await fetch(`${apiDomain}/messages/${messageId}`, {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          const messageDetails = await response.json();
-          if (response.ok) {
-            document.getElementById("messageDetails").innerHTML = `
-              <div class="messageDetailsContainer">
-                <strong>Pengirim:</strong> ${messageDetails.from.name} (${
-              messageDetails.from.address
-            })<br>
-                <strong>Subjek:</strong> ${messageDetails.subject}<br>
-                <strong>Pesan:</strong> <br>${messageDetails.text}
-                ${
-                  messageDetails.attachments
-                    ? `<br><strong>Lampiran:</strong> <a href="${messageDetails.attachments[0].url}" target="_blank">Download Lampiran</a>`
-                    : ""
-                }
-              </div>
-            `;
-
-            // Menampilkan tombol Hapus Pesan setelah pesan berhasil dimuat
-            document.getElementById("deleteMessageButton").style.display =
-              "inline-block";
-
-            // Setelah pesan berhasil dimuat, tandai sebagai telah dibaca
-            markAsRead();
-          } else {
-            alert("Gagal mengambil detail pesan.");
-          }
-        } catch (error) {
-          console.error(error);
-          alert("Terjadi kesalahan dalam memuat detail pesan.");
-        }
-      }
-
-      getMessageDetails();
-
-      function markAsRead() {
-        // Tambahkan logika jika perlu untuk menandai pesan sebagai telah dibaca
-      }
-
-      // Fungsi untuk menghapus pesan
-      async function deleteMessage() {
-        const confirmDelete = await Swal.fire({
-          title: "Apakah Anda yakin ingin menghapus pesan ini?",
-          text: "Pesan yang sudah dihapus tidak bisa dipulihkan!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Hapus",
-          cancelButtonText: "Batal",
+  // Fungsi untuk mencoba mengambil pesan dari kedua API
+  async function fetchFromApi(url, method, headers) {
+    for (let apiDomain of apiDomains) {
+      try {
+        const response = await fetch(apiDomain + url, {
+          method: method,
+          headers: headers,
         });
 
-        if (confirmDelete.isConfirmed) {
-          try {
-            const response = await fetch(`${apiDomain}/messages/${messageId}`, {
-              method: "DELETE",
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            });
-
-            if (response.ok) {
-              Swal.fire({
-                icon: "success",
-                title: "Pesan berhasil dihapus!",
-                text: "Pesan ini telah dihapus.",
-              }).then(() => {
-                window.location.href = "https://mail.arufkuy.my.id/inbox.html"; // Arahkan ke inbox setelah hapus
-              });
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Gagal menghapus pesan!",
-                text: "Terjadi kesalahan saat menghapus pesan.",
-              });
-            }
-          } catch (error) {
-            Swal.fire({
-              icon: "error",
-              title: "Terjadi kesalahan!",
-              text: "Coba lagi nanti.",
-            });
-          }
+        if (response.ok) {
+          return await response.json();
+        } else {
+          console.error(`Error from ${apiDomain}:`, response.status);
         }
+      } catch (error) {
+        console.error(`Error connecting to ${apiDomain}:`, error);
       }
+    }
 
-      function signOut() {
-        localStorage.removeItem("token");
-        window.location.href = "https://mail.Arufkuy.my.id";
+    throw new Error("Gagal mengambil data dari kedua API.");
+  }
+
+  // Fungsi untuk mengambil detail pesan
+  async function getMessageDetails() {
+    try {
+      const messageDetails = await fetchFromApi(
+        `/messages/${messageId}`,
+        "GET",
+        {
+          Authorization: `Bearer ${token}`,
+        }
+      );
+
+      document.getElementById("messageDetails").innerHTML = `
+        <div class="messageDetailsContainer">
+          <strong>Pengirim:</strong> ${messageDetails.from.name} (${messageDetails.from.address})<br>
+          <strong>Subjek:</strong> ${messageDetails.subject}<br>
+          <strong>Pesan:</strong> <br>${messageDetails.text}
+          ${
+            messageDetails.attachments
+              ? `<br><strong>Lampiran:</strong> <a href="${messageDetails.attachments[0].url}" target="_blank">Download Lampiran</a>`
+              : ""
+          }
+        </div>
+      `;
+
+      // Menampilkan tombol Hapus Pesan setelah pesan berhasil dimuat
+      document.getElementById("deleteMessageButton").style.display = "inline-block";
+
+      // Setelah pesan berhasil dimuat, tandai sebagai telah dibaca
+      markAsRead();
+    } catch (error) {
+      alert("Gagal mengambil detail pesan.");
+      console.error(error);
+    }
+  }
+
+  getMessageDetails();
+
+  function markAsRead() {
+    // Tambahkan logika jika perlu untuk menandai pesan sebagai telah dibaca
+  }
+
+  // Fungsi untuk menghapus pesan
+  async function deleteMessage() {
+    const confirmDelete = await Swal.fire({
+      title: "Apakah Anda yakin ingin menghapus pesan ini?",
+      text: "Pesan yang sudah dihapus tidak bisa dipulihkan!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Hapus",
+      cancelButtonText: "Batal",
+    });
+
+    if (confirmDelete.isConfirmed) {
+      try {
+        const response = await fetchFromApi(
+          `/messages/${messageId}`,
+          "DELETE",
+          {
+            Authorization: `Bearer ${token}`,
+          }
+        );
+
+        if (response) {
+          Swal.fire({
+            icon: "success",
+            title: "Pesan berhasil dihapus!",
+            text: "Pesan ini telah dihapus.",
+          }).then(() => {
+            window.location.href = "https://mail.arufkuy.my.id/inbox.html"; // Arahkan ke inbox setelah hapus
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Gagal menghapus pesan!",
+            text: "Terjadi kesalahan saat menghapus pesan.",
+          });
+        }
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Terjadi kesalahan!",
+          text: "Coba lagi nanti.",
+        });
       }
-    </script>
+    }
+  }
+
+  function signOut() {
+    localStorage.removeItem("token");
+    window.location.href = "https://mail.Arufkuy.my.id";
+  }
+</script>
+
   </body>
 </html>
