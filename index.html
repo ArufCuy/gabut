@@ -209,87 +209,64 @@ p {
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const usernameInput = document.getElementById("login__username");
-        const passwordInput = document.getElementById("login__password");
-        const form = document.querySelector(".form.login"); // Formnya diambil dari class
+  const usernameInput = document.getElementById("login__username");
+  const passwordInput = document.getElementById("login__password");
+  const form = document.querySelector(".form.login"); // Formnya diambil dari class
 
-        // Cek apakah sudah ada token di localStorage, jika ada arahkan ke halaman inbox
-        if (localStorage.getItem("token")) {
-            window.location.href = "https://mail.arufkuy.my.id/inbox.html";
-        }
+  // Cek apakah sudah ada token di localStorage, jika ada arahkan ke halaman inbox
+  if (localStorage.getItem("token")) {
+      window.location.href = "https://mail.arufkuy.my.id/inbox.html";
+  }
 
-        // Fungsi untuk mencoba login ke API
-        async function tryLogin(apiUrl, username, password) {
-            try {
-                const response = await fetch(apiUrl, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        address: username, 
-                        password: password
-                    })
-                });
+  // Handle form submit
+  form.addEventListener("submit", async function(event) {
+      event.preventDefault();  // Mencegah form submit otomatis
 
-                // Menghitung status respons
-                const data = await response.json();
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value.trim();
 
-                // Mengembalikan sukses jika token ditemukan dalam response
-                if (response.ok && data.token) {
-                    return { success: true, token: data.token };
-                } else {
-                    return { success: false, message: data.message || "Username atau password salah." };
-                }
-            } catch (error) {
-                return { success: false, message: "Terjadi kesalahan, coba lagi nanti." }; // Mengembalikan error jika gagal menghubungi API
-            }
-        }
+      if (!username || !password) {
+          Swal.fire({
+              icon: "error",
+              title: "Login Gagal!",
+              text: "Username atau password tidak boleh kosong.",
+          });
+          return;
+      }
 
-        // Handle form submit
-        form.addEventListener("submit", async function(event) {
-            event.preventDefault();  // Mencegah form submit otomatis
+      try {
+          const response = await fetch("https://api.mail.tm/token", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ address: username, password: password })
+          });
 
-            const username = usernameInput.value.trim();
-            const password = passwordInput.value.trim();
-
-            if (!username || !password) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Login Gagal!",
-                    text: "Username atau password tidak boleh kosong.",
-                });
-                return;
-            }
-
-            // Coba login ke api.mail.tm terlebih dahulu
-            let response = await tryLogin("https://api.mail.tm/token", username, password);
-            
-            // Jika login gagal, coba dengan api.mail.gw
-            if (!response.success) {
-                console.log("api.mail.tm gagal, mencoba api.mail.gw...");
-                response = await tryLogin("https://api.mail.gw/token", username, password);
-            }
-
-            // Jika login berhasil, simpan token dan arahkan ke inbox
-            if (response.success) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Login Berhasil!",
-                    text: "Ambil verifikasimu di inbox",
-                }).then(() => {
-                    localStorage.setItem("token", response.token);
-                    window.location.href = "https://mail.arufkuy.my.id/inbox.html"; // Arahkan ke inbox
-                });
-            } else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Login Gagal!",
-                    text: response.message || "Username atau password salah.",
-                });
-            }
-        });
-    });
+          const data = await response.json();
+          if (response.ok) {
+              Swal.fire({
+                  icon: "success",
+                  title: "Login Berhasil!",
+                  text: "Selaa",
+              }).then(() => {
+                  localStorage.setItem("token", data.token);
+                  window.location.href = "https://mail.arufkuy.my.id/inbox.html"; // Arahkan ke inbox
+              });
+          } else {
+              Swal.fire({
+                  icon: "error",
+                  title: "Login Gagal!",
+                  text: "Username atau password salah.",
+              });
+          }
+      } catch (error) {
+          Swal.fire({
+              icon: "error",
+              title: "Terjadi Kesalahan!",
+              text: "Coba lagi nanti.",
+          });
+      }
+  });
+});
 </script>
-
-
 </body>
 </html>
