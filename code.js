@@ -27,14 +27,13 @@ async function getUserEmail() {
     const avatarElement = document.querySelector(".mail-avatar span"); // Mengambil elemen avatar
 
     if (refreshButton) {
-      // Ambil hanya username tanpa domain
-      refreshButton.querySelector("span").textContent =
-        userData.address.split("@")[0];
+      // Menampilkan alamat email lengkap (username + domain)
+      refreshButton.querySelector("span").textContent = userData.address;
     }
 
     if (avatarElement) {
-      // Ambil huruf pertama dari nama pengguna
-      const firstLetter = userData.address.split("@")[0][0].toUpperCase(); // Ambil huruf pertama dari username
+      // Ambil huruf pertama dari username untuk avatar
+      const firstLetter = userData.address.split("@")[0][0].toUpperCase();
       avatarElement.textContent = firstLetter; // Set huruf pertama pada elemen avatar
     }
   } catch (error) {
@@ -122,6 +121,7 @@ if (logoutButton) {
     window.location.href = "https://mail.arufkuy.my.id"; // Redirect ke halaman login
   });
 }
+
 // Pastikan halaman sudah sepenuhnya dimuat
 document.addEventListener("DOMContentLoaded", function () {
   // Menambahkan event listener untuk link Discord
