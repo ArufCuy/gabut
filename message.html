@@ -23,7 +23,7 @@
       }
 
       #emailBody {
-        padding: 15px;
+        padding: 20px; /* Menambahkan sedikit ruang di sekitar teks */
         background-color: #f9f9f9; /* Warna latar belakang untuk membedakan dengan area lainnya */
         border-radius: 8px;
         box-sizing: border-box;
@@ -31,7 +31,30 @@
         color: #333333;
         line-height: 1.6;
         margin-top: 20px;
+        white-space: pre-wrap; /* Menjaga spasi dan baris baru */
         word-wrap: break-word; /* Memastikan teks panjang tidak keluar dari batas */
+        overflow-wrap: break-word; /* Memastikan kata yang terlalu panjang terpisah jika perlu */
+      }
+
+      /* Styling untuk link agar lebih jelas */
+      #emailBody a {
+        color: #2575c5; /* Warna biru untuk link */
+        text-decoration: none; /* Menghilangkan garis bawah */
+      }
+
+      #emailBody a:hover {
+        text-decoration: underline; /* Memberikan garis bawah saat hover */
+      }
+
+      /* Styling tambahan untuk teks dalam email yang panjang */
+      #emailBody pre {
+        background-color: #e5e5e5; /* Memberikan warna latar belakang sedikit lebih gelap pada pre */
+        border-radius: 4px;
+        padding: 10px;
+        font-family: monospace; /* Membuat font lebih konsisten untuk pre */
+        color: #333333;
+        white-space: pre-wrap; /* Tetap menjaga spasi dan baris baru */
+        word-wrap: break-word; /* Memastikan teks tidak keluar dari batas */
       }
 
       .container {
