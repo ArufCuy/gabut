@@ -215,7 +215,7 @@ p {
 
   // Cek apakah sudah ada token di localStorage, jika ada arahkan ke halaman inbox
   if (localStorage.getItem("token")) {
-      window.location.href = "/smartmail-main/inbox.html";
+      window.location.href = "inbox.html";
   }
 
   // Handle form submit
@@ -249,7 +249,7 @@ p {
                   text: "Ambil verifikasimu di inbox",
               }).then(() => {
                   localStorage.setItem("token", data.token);
-                  window.location.href = "/smartmail-main/inbox.html"; // Arahkan ke inbox
+                  window.location.href = "inbox.html"; // Arahkan ke inbox
               });
           } else {
               Swal.fire({
