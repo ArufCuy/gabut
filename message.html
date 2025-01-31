@@ -10,6 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
       body {
         font-family: "Roboto", sans-serif;
@@ -149,6 +150,23 @@
         margin-top: 10px;
         font-size: 16px;
       }
+      .back-button, .delete-button {
+        color: #007bff;
+        text-decoration: none;
+        font-size: 16px;
+        padding: 10px 20px;
+        border-radius: 25px;
+        background-color: rgba(0, 123, 255, 0.1);
+        transition: background-color 0.3s ease;
+        margin-left: 10px;
+        cursor: pointer;
+        border: none;
+      }
+
+      .back-button:hover, .delete-button:hover {
+        background-color: rgba(0, 123, 255, 0.2);
+        text-decoration: none;
+      }
 
       /* Memberikan padding lebih pada teks agar tidak terlalu menempel */
       .content p,
@@ -183,6 +201,9 @@
         <a href="#" class="back-button" id="mailBack"
           ><i class="fas fa-arrow-left"></i> Back</a
         >
+        <button class="delete-button" id="deleteMail">
+          <i class="fas fa-trash"></i> Hapus Pesan
+        </button>
       </div>
       <div class="content" id="mailContent">
         <h3 id="emailSubject">Email Subject</h3>
@@ -292,6 +313,31 @@
             (url) => `<a href="${url}" target="_blank">${url}</a>`
           );
         }
+        document.getElementById("deleteMail").addEventListener("click", function () {
+          Swal.fire({
+            title: "Hapus pesan ini?",
+            text: "Pesan yang dihapus tidak dapat dikembalikan!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Ya, hapus!",
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+              try {
+                await fetch(`https://api.mail.tm/messages/${messageId}`, {
+                  method: "DELETE",
+                  headers: { Authorization: `Bearer ${token}` },
+                });
+                Swal.fire("Terhapus!", "Pesan telah dihapus.", "success").then(() => {
+                  window.location.href = "https://mail.arufkuy.my.id/inbox.html";
+                });
+              } catch (error) {
+                Swal.fire("Error!", "Gagal menghapus pesan.", "error");
+              }
+            }
+          });
+        });
       });
     </script>
   </body>
