@@ -121,9 +121,9 @@ input[type="submit"] {
     --loginInputBackgroundColor: #3b4148;
     --loginInputHoverBackgroundColor: #434a52;
     --loginLabelBackgroundColor: #363b41;
-    --loginSubmitBackgroundColor: #006BFF;
+    --loginSubmitBackgroundColor: #2A004E;
     --loginSubmitColor: #eee;
-    --loginSubmitHoverBackgroundColor: #0264eb;
+    --loginSubmitHoverBackgroundColor: #500073;
 }
 .login {
     color: var(--loginColor);
@@ -162,11 +162,27 @@ p {
 .text--center {
     text-align: center;
 }
+#background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Agar video memenuhi seluruh layar */
+    z-index: -1; /* Agar video berada di belakang konten */
+  }
 </style>
 </head>
 <body class="align">
+    <video autoplay muted loop id="background-video">
+        <source src="https://cdn.pixabay.com/video/2021/11/29/99299-655758366_large.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
 
   <div class="grid">
+    <div class="form-image" style="text-align: center;">
+        <img src="https://pngimg.com/uploads/minecraft/minecraft_PNG50.png" alt="Minecraft" style="width: 90%; height: auto;">
+      </div>
 
     <form class="form login">
 
