@@ -378,11 +378,6 @@ document.getElementById("refreshButton")?.addEventListener("click", (event) => {
   getMessages();
 });
 
-document.getElementById("mailBack")?.addEventListener("click", (event) => {
-  event.preventDefault();
-  window.history.back();
-});
-
 const logoutButton = document.getElementById("logoutButton");
 if (logoutButton) {
   logoutButton.addEventListener("click", (event) => {
