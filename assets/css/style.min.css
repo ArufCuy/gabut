@@ -5293,6 +5293,35 @@ fieldset:disabled .btn {
   background-color: #000;
   border-radius: 0.25rem;
 }
+
+/* Menyembunyikan ikon SVG jika ingin menggunakan :before */
+#mailBack i.aruf-arrow svg {
+  display: inline-block;
+  font-size: 1.5rem;
+  color: #000;
+}
+
+/* Menampilkan ikon :before */
+#mailBack i.aruf-arrow::before {
+  content: "\2190"; /* Unicode panah kiri */
+  font-size: 1.5rem;
+  color: #000;
+  display: none; /* Menyembunyikan :before secara default */
+  margin-right: 8px;
+  font-family: "Arial", sans-serif;
+}
+
+/* Menampilkan ikon :before hanya di desktop */
+@media (min-width: 1200px) {
+  #mailBack i.aruf-arrow::before {
+    display: inline-block; /* Menampilkan ikon :before di desktop */
+  }
+
+  #mailBack i.aruf-arrow svg {
+    display: none; /* Menyembunyikan SVG di desktop */
+  }
+}
+
 .popover {
   position: absolute;
   top: 0;
@@ -10083,27 +10112,11 @@ fieldset:disabled .btn {
   line-height: 1.4;
   padding-left: 5px;
 }
-@media (min-width: 1200px) {
-  .mailcontent-subject h4,
-  .mailcontent-subject .h4 {
-    margin-top: 0;
-    margin-right: 25px;
-    padding-left: 0;
-  }
-}
-.mailcontent-subject .nav {
-  flex-shrink: 0;
-  margin-top: 2.5px;
-  margin-left: auto;
-}
+
 .mailcontent-subject .nav-link:first-child {
   margin-right: auto;
 }
-@media (min-width: 1200px) {
-  .mailcontent-subject .nav-link:first-child {
-    display: none;
-  }
-}
+
 .mailcontent-subject .nav-link i {
   font-size: 20px;
 }
